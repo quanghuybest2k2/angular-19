@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, UpperCasePipe } from '@angular/common';
+import { Pagination } from './utilities/pagination.util';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,12 @@ import { CommonModule, UpperCasePipe } from '@angular/common';
   styleUrl: './app.component.scss',
   standalone: true,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-basic';
   languages = ['en', 'vi']; // Available languages
   selectedLang: string;
+  users: any[] = [];
+  pagination: Pagination;
 
   constructor(private translate: TranslateService) {
     // Set included languages
@@ -31,10 +34,36 @@ export class AppComponent {
     this.translate.setDefaultLang(defaultLang);
     this.translate.use(defaultLang);
     this.selectedLang = defaultLang; // Set initial selected language
+    this.pagination = new Pagination(5);
   }
 
   switchLanguage(lang: string) {
     this.translate.use(lang);
     this.selectedLang = lang; // Update selected language
+  }
+  fetchUsers() {
+    const allUsers = Array.from({ length: 50 }, (_, i) => ({
+      id: i + 1,
+      name: `User ${i + 1}`,
+    }));
+
+    this.pagination.setTotalItems(allUsers.length);
+
+    this.users = allUsers.slice(
+      this.pagination.getStartIndex(),
+      this.pagination.getEndIndex() + 1
+    );
+  }
+  next() {
+    this.pagination.nextPage();
+    this.fetchUsers();
+  }
+
+  prev() {
+    this.pagination.prevPage();
+    this.fetchUsers();
+  }
+  ngOnInit() {
+    this.fetchUsers();
   }
 }

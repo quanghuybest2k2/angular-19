@@ -8,3 +8,13 @@
     </option>
   </select>
 </div>
+<!-- pagination -->
+ <div *ngFor="let user of users">
+  {{ user.id }} - {{ user.name }}
+</div>
+
+<div>
+  <button (click)="prev()" [disabled]="pagination.currentPage === 1">Prev</button>
+  <span>Page {{ pagination.currentPage }} / {{ pagination.totalPages }}</span>
+  <button (click)="next()" [disabled]="pagination.currentPage === pagination.totalPages">Next</button>
+</div>
