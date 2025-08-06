@@ -1,0 +1,6 @@
+{
+    "app": {
+        "hello": "xin chào {{value}}",
+        "title": "Demo Dịch thuật"
+    }
+}
