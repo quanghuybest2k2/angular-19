@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, UpperCasePipe } from '@angular/common';
+import { HelloWorld } from './decorators/hello.decorator';
 import { Pagination } from './utilities/pagination.util';
 
+@HelloWorld()
 @Component({
   selector: 'app-root',
   imports: [TranslateModule, FormsModule, UpperCasePipe, CommonModule],
